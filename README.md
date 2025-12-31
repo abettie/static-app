@@ -47,19 +47,23 @@ Webブラウザ上で完結し、バックエンドサーバーを必要とし�
 ### インフラストラクチャのデプロイ
 
 #### ステージング環境
+(例)
 ```bash
 cd infrastructure/stg
-terraform init
-terraform plan
-terraform apply
+aws sso login --profile terraform-static-stg
+export AWS_PROFILE=terraform-static-stg; terraform init
+export AWS_PROFILE=terraform-static-stg; terraform plan
+export AWS_PROFILE=terraform-static-stg; terraform apply
 ```
 
 #### 本番環境
+(例)
 ```bash
 cd infrastructure/prod
-terraform init
-terraform plan
-terraform apply
+aws sso login --profile terraform-static-prod
+export AWS_PROFILE=terraform-static-prod; terraform init
+export AWS_PROFILE=terraform-static-prod; terraform plan
+export AWS_PROFILE=terraform-static-prod; terraform apply
 ```
 
 ## 開発フロー
