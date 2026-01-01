@@ -50,20 +50,20 @@ Webブラウザ上で完結し、バックエンドサーバーを必要とし�
 (例)
 ```bash
 cd infrastructure/stg
-aws sso login --profile terraform-static-stg
-export AWS_PROFILE=terraform-static-stg; terraform init
-export AWS_PROFILE=terraform-static-stg; terraform plan
-export AWS_PROFILE=terraform-static-stg; terraform apply
+aws sso login --profile static-stg
+export AWS_PROFILE=static-stg && terraform init
+export AWS_PROFILE=static-stg && terraform plan
+export AWS_PROFILE=static-stg && terraform apply
 ```
 
 #### 本番環境
 (例)
 ```bash
 cd infrastructure/prod
-aws sso login --profile terraform-static-prod
-export AWS_PROFILE=terraform-static-prod; terraform init
-export AWS_PROFILE=terraform-static-prod; terraform plan
-export AWS_PROFILE=terraform-static-prod; terraform apply
+aws sso login --profile static-prod
+export AWS_PROFILE=static-prod && terraform init
+export AWS_PROFILE=static-prod && terraform plan
+export AWS_PROFILE=static-prod && terraform apply
 ```
 
 ## 開発フロー

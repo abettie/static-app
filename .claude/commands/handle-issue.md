@@ -22,12 +22,20 @@
    - コーディング規約に従って実装
 
 4. **Terraform構文チェック**（infrastructureディレクトリ配下のソース修正時のみ）
-   - `aws sso login --profile terraform-master` を実行
-   - ログインが成功したら`AWS_PROFILE=terraform-master; terraform plan` を実行
+   - 下記コマンドでログイン実行
+     - `aws sso login --profile static-stg`
+   - ログインが成功したらstgディレクトリに移動して下記を実行
+     - `export AWS_PROFILE=static-stg && terraform plan`
+   - 下記コマンドでログイン実行
+     - `aws sso login --profile static-prod`
+   - ログインが成功したらprodディレクトリに移動して下記を実行
+     - `export AWS_PROFILE=static-prod && terraform plan`
    - エラーが発生した場合:
      - エラーメッセージを確認し、原因を特定
      - 該当するTerraformファイルを修正
-     - 再度 `AWS_PROFILE=terraform-master; terraform plan` を実行
+     - 修正箇所に応じてprod, stgディレクトリに移動し再度下記どちらかを実行
+       - `export AWS_PROFILE=static-prod && terraform plan`
+       - `export AWS_PROFILE=static-stg && terraform plan`
      - エラーがなくなるまで修正とplanを繰り返す
    - planが成功したら次のステップへ進む
 
