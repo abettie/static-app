@@ -29,6 +29,20 @@ provider "aws" {
   }
 }
 
+# CloudFront requires ACM certificates in us-east-1
+provider "aws" {
+  alias  = "us_east_1"
+  region = "us-east-1"
+
+  default_tags {
+    tags = {
+      Environment = "production"
+      ManagedBy   = "Terraform"
+      Project     = "static-app"
+    }
+  }
+}
+
 module "hosted_zone" {
   source = "../modules/route53-hosted-zone"
 
@@ -37,5 +51,22 @@ module "hosted_zone" {
 
   tags = {
     Project = "static-app"
+  }
+}
+
+module "ssl_certificate" {
+  source = "../modules/acm-certificate"
+
+  providers = {
+    aws = aws.us_east_1
+  }
+
+  domain_name      = var.ssl_domain_name
+  route53_zone_id  = module.hosted_zone.zone_id
+  environment      = "production"
+
+  tags = {
+    Project = "static-app"
+    Purpose = "CloudFront"
   }
 }
