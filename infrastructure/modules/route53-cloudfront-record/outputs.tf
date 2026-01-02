@@ -1,0 +1,9 @@
+output "record_name" {
+  description = "The name of the Route53 record"
+  value       = aws_route53_record.main.name
+}
+
+output "record_fqdn" {
+  description = "The FQDN of the Route53 record"
+  value       = aws_route53_record.main.fqdn
+}

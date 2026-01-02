@@ -70,3 +70,43 @@ module "ssl_certificate" {
     Purpose = "CloudFront"
   }
 }
+
+module "apps_s3_bucket" {
+  source = "../modules/s3-static-website"
+
+  bucket_name = "apps-prod-675f09ae-9bb8-4d10-b5f2-77c2f1bb1066"
+  environment = "production"
+
+  tags = {
+    Project = "static-app"
+    Purpose = "Apps hosting"
+  }
+}
+
+module "apps_cloudfront" {
+  source = "../modules/cloudfront-s3"
+
+  domain_name                    = var.ssl_domain_name
+  s3_bucket_id                   = module.apps_s3_bucket.bucket_id
+  s3_bucket_regional_domain_name = module.apps_s3_bucket.bucket_regional_domain_name
+  certificate_arn                = module.ssl_certificate.certificate_arn
+  environment                    = "production"
+
+  tags = {
+    Project = "static-app"
+    Purpose = "Apps distribution"
+  }
+}
+
+module "apps_route53_record" {
+  source = "../modules/route53-cloudfront-record"
+
+  zone_id                    = module.hosted_zone.zone_id
+  domain_name                = var.ssl_domain_name
+  cloudfront_domain_name     = module.apps_cloudfront.distribution_domain_name
+  cloudfront_hosted_zone_id  = module.apps_cloudfront.distribution_hosted_zone_id
+
+  tags = {
+    Project = "static-app"
+  }
+}
