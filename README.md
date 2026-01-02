@@ -46,6 +46,34 @@ Webブラウザ上で完結し、バックエンドサーバーを必要とし�
 
 ### インフラストラクチャのデプロイ
 
+#### 初回デプロイ時の注意事項
+
+SSL証明書の発行にはDNS検証が必要なため、以下の手順でデプロイを行ってください：
+
+1. **ホストゾーンの先行作成**
+
+   まず、Route53のホストゾーンのみを作成します：
+   ```bash
+   cd infrastructure/[環境]  # prod または stg
+   aws sso login --profile [プロファイル名]
+   export AWS_PROFILE=[プロファイル名] && terraform init
+   export AWS_PROFILE=[プロファイル名] && terraform plan -target=module.hosted_zone
+   export AWS_PROFILE=[プロファイル名] && terraform apply -target=module.hosted_zone
+   ```
+
+2. **ドメインレジストラでNSレコードの設定**
+
+   上記コマンド実行後に出力されるネームサーバー情報を、ドメインレジストラ側で設定してください。
+   DNSの伝播には数分から48時間程度かかる場合があります。
+
+3. **残りのリソースのデプロイ**
+
+   NSレコードの設定が完了し、DNSの伝播を確認したら、残りのリソースをデプロイします：
+   ```bash
+   export AWS_PROFILE=[プロファイル名] && terraform plan
+   export AWS_PROFILE=[プロファイル名] && terraform apply
+   ```
+
 #### ステージング環境
 (例)
 ```bash
