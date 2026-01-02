@@ -13,7 +13,7 @@ Webブラウザ上で完結し、バックエンドサーバーを必要とし�
 /
 ├── infrastructure/prod/     # 本番環境用 Terraformソース
 ├── infrastructure/stg/      # ステージング環境用 Terraformソース
-├── frontend/                # フロントエンドアプリケーション
+├── application/             # フロントエンドアプリケーション
 └── README.md
 ```
 
@@ -96,7 +96,7 @@ export AWS_PROFILE=static-prod && terraform apply
 
 ## 開発フロー
 
-1. `frontend/`ディレクトリでアプリケーションを開発
+1. `application/`ディレクトリでアプリケーションを開発
 2. ステージング環境でテスト・検証
 3. 問題がなければ本番環境へデプロイ
 
