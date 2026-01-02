@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アプリポータル</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Hiragino Sans', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .app-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 200px;
+            justify-content: center;
+        }
+
+        .app-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-card:active {
+            transform: translateY(-4px);
+        }
+
+        .app-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #667eea;
+        }
+
+        .app-description {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        footer {
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .app-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .app-card {
+                padding: 1.5rem;
+                min-height: 180px;
+            }
+
+            .app-icon {
+                font-size: 3.5rem;
+            }
+
+            .app-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .app-icon {
+                font-size: 3rem;
+            }
+        }
+
+        /* タップ時のフィードバック改善 */
+        @media (hover: none) and (pointer: coarse) {
+            .app-card {
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .app-card:active {
+                transform: scale(0.98);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 アプリポータル</h1>
+        <p class="subtitle">楽しいアプリを集めました</p>
+
+        <div class="app-grid">
+            <a href="kuku/" class="app-card">
+                <div class="app-icon">✖️</div>
+                <div class="app-title">九九練習</div>
+                <p class="app-description">楽しく九九を練習できるアプリ。タップして答えをチェック！</p>
+            </a>
+
+            <!-- 今後追加予定のアプリ用プレースホルダー -->
+            <!--
+            <a href="app2/" class="app-card">
+                <div class="app-icon">📝</div>
+                <div class="app-title">アプリ名</div>
+                <p class="app-description">アプリの説明文</p>
+            </a>
+            -->
+        </div>
+
+        <footer>
+            © 2025 Application Portal
+        </footer>
+    </div>
+</body>
+</html>
