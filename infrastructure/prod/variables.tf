@@ -9,3 +9,9 @@ variable "domain_name" {
   type        = string
   default     = "static.makedara.work"
 }
+
+variable "ssl_domain_name" {
+  description = "Domain name for the SSL certificate"
+  type        = string
+  default     = "apps.static.makedara.work"
+}
