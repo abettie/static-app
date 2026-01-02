@@ -16,6 +16,15 @@ resource "aws_cloudfront_origin_access_control" "main" {
   signing_protocol                  = "sigv4"
 }
 
+# CloudFront Function for URL rewriting
+resource "aws_cloudfront_function" "url_rewrite" {
+  name    = "url-rewrite-${var.s3_bucket_id}"
+  runtime = "cloudfront-js-1.0"
+  comment = "Rewrite URLs ending with slash to index.html"
+  publish = true
+  code    = file("${path.module}/url-rewrite-function.js")
+}
+
 # CloudFront Distribution
 resource "aws_cloudfront_distribution" "main" {
   enabled             = true
@@ -48,6 +57,11 @@ resource "aws_cloudfront_distribution" "main" {
     default_ttl            = 3600
     max_ttl                = 86400
     compress               = true
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.url_rewrite.arn
+    }
   }
 
   restrictions {
