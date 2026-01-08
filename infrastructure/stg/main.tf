@@ -91,6 +91,7 @@ module "apps_cloudfront" {
   s3_bucket_regional_domain_name = module.apps_s3_bucket.bucket_regional_domain_name
   certificate_arn                = module.ssl_certificate.certificate_arn
   environment                    = "staging"
+  cache_ttl                      = 2
 
   tags = {
     Project = "static-app"

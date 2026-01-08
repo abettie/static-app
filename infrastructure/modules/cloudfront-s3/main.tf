@@ -25,6 +25,32 @@ resource "aws_cloudfront_function" "url_rewrite" {
   code    = file("${path.module}/url-rewrite-function.js")
 }
 
+# CloudFront Cache Policy
+resource "aws_cloudfront_cache_policy" "main" {
+  name        = "cache-policy-${var.s3_bucket_id}"
+  comment     = "Cache policy for ${var.domain_name}"
+  default_ttl = var.cache_ttl
+  max_ttl     = 86400
+  min_ttl     = 0
+
+  parameters_in_cache_key_and_forwarded_to_origin {
+    cookies_config {
+      cookie_behavior = "none"
+    }
+
+    headers_config {
+      header_behavior = "none"
+    }
+
+    query_strings_config {
+      query_string_behavior = "none"
+    }
+
+    enable_accept_encoding_gzip   = true
+    enable_accept_encoding_brotli = true
+  }
+}
+
 # CloudFront Distribution
 resource "aws_cloudfront_distribution" "main" {
   enabled             = true
@@ -40,23 +66,12 @@ resource "aws_cloudfront_distribution" "main" {
   }
 
   default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "S3-${var.s3_bucket_id}"
-
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-    }
-
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+    cached_methods         = ["GET", "HEAD"]
+    target_origin_id       = "S3-${var.s3_bucket_id}"
     viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
     compress               = true
+    cache_policy_id        = aws_cloudfront_cache_policy.main.id
 
     function_association {
       event_type   = "viewer-request"
