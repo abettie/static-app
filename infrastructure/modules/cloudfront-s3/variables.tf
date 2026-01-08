@@ -28,3 +28,9 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "cache_ttl" {
+  description = "Default cache TTL in seconds"
+  type        = number
+  default     = 3600
+}
