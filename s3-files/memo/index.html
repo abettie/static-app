@@ -1,12 +1,222 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>memo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ドキュポータル</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Hiragino Sans', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 220px;
+            justify-content: center;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .doc-card:active {
+            transform: translateY(-4px);
+        }
+
+        .doc-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+
+        .doc-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+            color: #2a9d6e;
+        }
+
+        .doc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.65rem;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+
+        .tag-green {
+            background: #d4f5e9;
+            color: #1a7a52;
+        }
+
+        .tag-blue {
+            background: #d6eeff;
+            color: #1a5c99;
+        }
+
+        .tag-yellow {
+            background: #fff5cc;
+            color: #8a6800;
+        }
+
+        .doc-description {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        footer {
+            color: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .doc-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .doc-card {
+                padding: 1.5rem;
+                min-height: 200px;
+            }
+
+            .doc-icon {
+                font-size: 3.5rem;
+            }
+
+            .doc-title {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .doc-icon {
+                font-size: 3rem;
+            }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .doc-card {
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .doc-card:active {
+                transform: scale(0.98);
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>memo</h1>
-  <p>準備中</p>
+    <div class="container">
+        <h1>📚 ドキュポータル</h1>
+        <p class="subtitle">S3共有ドキュメント集</p>
+
+        <div class="doc-grid">
+            <a href="dev-notes.md" class="doc-card">
+                <div class="doc-icon">🛠️</div>
+                <div class="doc-title">業務ノウハウ集</div>
+                <div class="doc-tags">
+                    <span class="tag tag-green">alias</span>
+                    <span class="tag tag-blue">Claude Code</span>
+                    <span class="tag tag-yellow">Vim</span>
+                </div>
+                <p class="doc-description">git alias、Claude Code設定、Vim設定など開発環境の共有メモ</p>
+            </a>
+
+            <!-- 今後追加予定のドキュメント用プレースホルダー -->
+            <!--
+            <a href="example.md" class="doc-card">
+                <div class="doc-icon">📄</div>
+                <div class="doc-title">ドキュメント名</div>
+                <div class="doc-tags">
+                    <span class="tag tag-green">タグ</span>
+                </div>
+                <p class="doc-description">説明文</p>
+            </a>
+            -->
+        </div>
+
+        <footer>
+            © 2025 Document Portal
+        </footer>
+    </div>
 </body>
 </html>
