@@ -111,3 +111,61 @@ module "apps_route53_record" {
     Project = "static-app"
   }
 }
+
+module "memo_ssl_certificate" {
+  source = "../modules/acm-certificate"
+
+  providers = {
+    aws = aws.us_east_1
+  }
+
+  domain_name     = "memo.static.makedara.work"
+  route53_zone_id = module.hosted_zone.zone_id
+  environment     = "production"
+
+  tags = {
+    Project = "static-app"
+    Purpose = "CloudFront"
+  }
+}
+
+module "memo_s3_bucket" {
+  source = "../modules/s3-static-website"
+
+  bucket_name = "memo-prod-675f09ae-9bb8-4d10-b5f2-77c2f1bb1066"
+  environment = "production"
+
+  tags = {
+    Project = "static-app"
+    Purpose = "Memo hosting"
+  }
+}
+
+module "memo_cloudfront" {
+  source = "../modules/cloudfront-s3"
+
+  domain_name                    = "memo.static.makedara.work"
+  s3_bucket_id                   = module.memo_s3_bucket.bucket_id
+  s3_bucket_regional_domain_name = module.memo_s3_bucket.bucket_regional_domain_name
+  certificate_arn                = module.memo_ssl_certificate.certificate_arn
+  environment                    = "production"
+  cache_ttl                      = 60
+
+  tags = {
+    Project = "static-app"
+    Purpose = "Memo distribution"
+  }
+}
+
+module "memo_route53_record" {
+  source = "../modules/route53-cloudfront-record"
+
+  zone_id                   = module.hosted_zone.zone_id
+  domain_name               = "memo.static.makedara.work"
+  cloudfront_domain_name    = module.memo_cloudfront.distribution_domain_name
+  cloudfront_hosted_zone_id = module.memo_cloudfront.distribution_hosted_zone_id
+
+  tags = {
+    Project = "static-app"
+  }
+}
