@@ -10,8 +10,8 @@ variable "domain_name" {
   default     = "static-stg.makedara.work"
 }
 
-variable "ssl_domain_name" {
-  description = "Domain name for the SSL certificate"
+variable "uuid" {
+  description = "Unique identifier for resource names"
   type        = string
-  default     = "apps.static-stg.makedara.work"
+  default     = "675f09ae-9bb8-4d10-b5f2-77c2f1bb1066"
 }
