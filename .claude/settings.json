@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh issue create *)",
+      "Bash(gh pr create *)",
+      "Bash(git checkout -b *)",
+      "Bash(git mv *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(mkdir -p *)",
+      "Bash(rmdir *)"
+    ]
+  }
+}
