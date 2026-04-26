@@ -61,7 +61,7 @@ module "ssl_certificate" {
     aws = aws.us_east_1
   }
 
-  domain_name      = var.ssl_domain_name
+  domain_name      = "apps.${var.domain_name}"
   route53_zone_id  = module.hosted_zone.zone_id
   environment      = "staging"
 
@@ -74,7 +74,7 @@ module "ssl_certificate" {
 module "apps_s3_bucket" {
   source = "../modules/s3-static-website"
 
-  bucket_name = "apps-stg-675f09ae-9bb8-4d10-b5f2-77c2f1bb1066"
+  bucket_name = "apps-stg-${var.uuid}"
   environment = "staging"
 
   tags = {
@@ -86,7 +86,7 @@ module "apps_s3_bucket" {
 module "apps_cloudfront" {
   source = "../modules/cloudfront-s3"
 
-  domain_name                    = var.ssl_domain_name
+  domain_name                    = "apps.${var.domain_name}"
   s3_bucket_id                   = module.apps_s3_bucket.bucket_id
   s3_bucket_regional_domain_name = module.apps_s3_bucket.bucket_regional_domain_name
   certificate_arn                = module.ssl_certificate.certificate_arn
@@ -103,7 +103,7 @@ module "apps_route53_record" {
   source = "../modules/route53-cloudfront-record"
 
   zone_id                    = module.hosted_zone.zone_id
-  domain_name                = var.ssl_domain_name
+  domain_name                = "apps.${var.domain_name}"
   cloudfront_domain_name     = module.apps_cloudfront.distribution_domain_name
   cloudfront_hosted_zone_id  = module.apps_cloudfront.distribution_hosted_zone_id
 
@@ -119,7 +119,7 @@ module "memo_ssl_certificate" {
     aws = aws.us_east_1
   }
 
-  domain_name     = "memo.static-stg.makedara.work"
+  domain_name     = "memo.${var.domain_name}"
   route53_zone_id = module.hosted_zone.zone_id
   environment     = "staging"
 
@@ -132,7 +132,7 @@ module "memo_ssl_certificate" {
 module "memo_s3_bucket" {
   source = "../modules/s3-static-website"
 
-  bucket_name = "memo-stg-675f09ae-9bb8-4d10-b5f2-77c2f1bb1066"
+  bucket_name = "memo-stg-${var.uuid}"
   environment = "staging"
 
   tags = {
@@ -144,7 +144,7 @@ module "memo_s3_bucket" {
 module "memo_cloudfront" {
   source = "../modules/cloudfront-s3"
 
-  domain_name                    = "memo.static-stg.makedara.work"
+  domain_name                    = "memo.${var.domain_name}"
   s3_bucket_id                   = module.memo_s3_bucket.bucket_id
   s3_bucket_regional_domain_name = module.memo_s3_bucket.bucket_regional_domain_name
   certificate_arn                = module.memo_ssl_certificate.certificate_arn
@@ -161,7 +161,7 @@ module "memo_route53_record" {
   source = "../modules/route53-cloudfront-record"
 
   zone_id                   = module.hosted_zone.zone_id
-  domain_name               = "memo.static-stg.makedara.work"
+  domain_name               = "memo.${var.domain_name}"
   cloudfront_domain_name    = module.memo_cloudfront.distribution_domain_name
   cloudfront_hosted_zone_id = module.memo_cloudfront.distribution_hosted_zone_id
 
