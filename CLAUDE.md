@@ -8,7 +8,8 @@
 /
 ├── infrastructure/prod/     # Terraform本番用 (AWS)
 ├── infrastructure/stg/      # Terraform開発用 (AWS)
-├── frontend/                # フロントエンドソース（HTML, JavaScriptなど）
+├── s3-files/apps/           # apps バケット向けフロントエンドソース
+├── s3-files/memo/           # memo バケット向けフロントエンドソース
 ```
 
 ## 技術スタック
